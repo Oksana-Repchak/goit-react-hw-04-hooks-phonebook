@@ -29,7 +29,7 @@ export default function App() {
       return;
     }
     localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  }, []);
 
   const addContact = (name, number) => {
     const contact = {
