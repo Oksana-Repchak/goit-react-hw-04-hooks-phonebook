@@ -13,7 +13,7 @@ const initialContacts = [
 ];
 
 export default function App() {
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('');
   const isFirstRender = useRef(true);
 
@@ -21,15 +21,18 @@ export default function App() {
     if (isFirstRender.current) {
       const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
 
-      if (parsedContacts) {
-        setContacts(parsedContacts);
-      }
+      parsedContacts
+        ? setContacts(parsedContacts)
+        : setContacts(initialContacts);
 
       isFirstRender.current = false;
       return;
     }
-    localStorage.setItem('contacts', JSON.stringify(contacts));
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const addContact = (name, number) => {
     const contact = {
